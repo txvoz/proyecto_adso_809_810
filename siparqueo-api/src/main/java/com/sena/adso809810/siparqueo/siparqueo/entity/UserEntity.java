@@ -36,7 +36,12 @@ public class UserEntity {
     @Column(name = "password")
     private String password;
 
+    /*
     @Column(name = "rol_id")
-    private Long rolId;
+    private Long rolId;*/
+
+    @ManyToOne
+    @JoinColumn(name = "rol_id", nullable = false, updatable = false)
+    private RolEntity rol;
 
 }
