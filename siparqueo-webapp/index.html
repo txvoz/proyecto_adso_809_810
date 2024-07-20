@@ -10,6 +10,8 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     
     <link rel="stylesheet" href="assets/css/index.css">
+    
+
 </head>
 
 <body>
@@ -34,12 +36,12 @@
                 </ul>
             </header>
        </div>
-        <form style="margin: 50px;" action="#">
+        <form id="frm1" style="margin: 50px;" >
             <h1>Formulario de registro!</h1>
             <br>
             <div class="row">
                 <div class="col-3">
-                    <label for="nombres" class="form-label">Nombres</label>
+                    <label for="nombres" class="form-label ">Nombres</label>
                     <input type="text" class="form-control" id="nombres" placeholder="Ingrese sus nombres completos">
                 </div>
                 <div class="col-3">
@@ -53,10 +55,6 @@
                 <div class="col-3">
                     <label for="correo" class="form-label">Correo</label>
                     <input type="email" class="form-control" id="correo" placeholder="Ingrese su correo">
-                </div>
-                <div class="col-3">
-                    <label for="rango_salario" class="form-label">Rango salario</label>
-                    <input type="range" class="form-control" id="rango_salario" min="1000000" max="100000000" value="55000000">
                 </div>
                 <div class="col-3">
                     <label for="telefono" class="form-label">Telefono</label>
@@ -81,12 +79,14 @@
             <br>
             <div class="row">
                 <div class="col-12">
-                    <button type="button" id="btnSubmit" class="btn btn-primary btn-lg">Enviar</button>
+                    <button type="submit" id="btnSubmit" class="btn btn-primary btn-lg">Enviar</button>
                     <button type="reset" id="resetData" class="btn btn-secondary btn-lg">Limpiar</button>
                 </div>
             </div>
         </form>
         <br>
+
+        <!--- ->
         <table class="table">
             <thead>
               <tr>
@@ -105,7 +105,9 @@
               </tr>
             </thead>
             <tbody id="bodyList"><tr><th scope="row">1</th><td>1</td><td>Albany</td><td>2024-02-26T05:00:00.000+00:00</td><td>1</td><td> <div class="userColor" style="background-color:#999"></div> <label class="detail-color">#999</label> </td><td>admin@sena.edu.co</td><td> -- </td><td>12312312313</td><td><img src="http://localhost/imagenes/not-found.png" class="avatar" width="50px" height="50px"></td><td>CLIENT</td><td><div data-id="1" class="eliminar">Eliminar</div><div data-id="1" class="editar">Editar</div></td></tr><tr><th scope="row">2</th><td>2</td><td>Gustavo Adolfo</td><td>2000-01-01T05:00:00.000+00:00</td><td>25</td><td> <div class="userColor" style="background-color:#c22e2e"></div> <label class="detail-color">#c22e2e</label> </td><td>garodriguez335@misena.edu.co</td><td> -- </td><td>8382057</td><td><img src="http://localhost/imagenes/not-found.png" class="avatar" width="50px" height="50px"></td><td>AUX</td><td><div data-id="2" class="eliminar">Eliminar</div><div data-id="2" class="editar">Editar</div></td></tr><tr><th scope="row">3</th><td>3</td><td>Gaby</td><td>1990-01-01T05:00:00.000+00:00</td><td>35</td><td> <div class="userColor" style="background-color:#1630b1"></div> <label class="detail-color">#1630b1</label> </td><td>julianurrutia554@gmail.com</td><td> -- </td><td>45645456456</td><td><img src="http://localhost/imagenes/not-found.png" class="avatar" width="50px" height="50px"></td><td>ADMIN</td><td><div data-id="3" class="eliminar">Eliminar</div><div data-id="3" class="editar">Editar</div></td></tr><tr><th scope="row">4</th><td>4</td><td>test test</td><td>2024-05-26T05:00:00.000+00:00</td><td>1</td><td> <div class="userColor" style="background-color:#f42525"></div> <label class="detail-color">#f42525</label> </td><td>adadasd@test.ccc</td><td> -- </td><td>22314424234</td><td><img src="http://localhost/imagenes/not-found.png" class="avatar" width="50px" height="50px"></td><td>CLIENT</td><td><div data-id="4" class="eliminar">Eliminar</div><div data-id="4" class="editar">Editar</div></td></tr><tr><th scope="row">5</th><td>5</td><td>Gustavo Adolfo</td><td>1991-01-01T05:00:00.000+00:00</td><td>34</td><td> <div class="userColor" style="background-color:#22dd6a"></div> <label class="detail-color">#22dd6a</label> </td><td>Garodriguez335@misena.edu.co</td><td> -- </td><td>8382057</td><td><img src="http://localhost/imagenes/6290.872692655702-234.jpg" class="avatar" width="50px" height="50px"></td><td>ADMIN</td><td><div data-id="5" class="eliminar">Eliminar</div><div data-id="5" class="editar">Editar</div></td></tr><tr><th scope="row">6</th><td>6</td><td>Gaby Rodriguez</td><td>2024-05-19T05:00:00.000+00:00</td><td>1</td><td> <div class="userColor" style="background-color:#a59a22"></div> <label class="detail-color">#a59a22</label> </td><td>gaby@misena.edu.co</td><td> -- </td><td>3116469802</td><td><img src="http://localhost/imagenes/not-found.png" class="avatar" width="50px" height="50px"></td><td>CLIENT</td><td><div data-id="6" class="eliminar">Eliminar</div><div data-id="6" class="editar">Editar</div></td></tr></tbody>
-          </table>
+          </table>-->
+
+          
         
           <div id="content_footer">
             <footer>
@@ -116,6 +118,7 @@
 
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
-
+    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+    <script src="assets/js/index.js"></script>
 
 </body></html>

@@ -31,3 +31,8 @@ input.input-error {
     border-radius: 50%;
 }
 
+.error-input {
+    border-color: red;
+    color: red;
+    background-color: #f9ebed;
+}
