@@ -36,4 +36,9 @@ public class RolService {
         return optionalRolEntity.isPresent();
     }
 
+    public RolEntity getRolById(Long id) {
+        Optional<RolEntity> optionalRolEntity = this.repository.findById(id);
+        return optionalRolEntity.get();
+    }
+
 }

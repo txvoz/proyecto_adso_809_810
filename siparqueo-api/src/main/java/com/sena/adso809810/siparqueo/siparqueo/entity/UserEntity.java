@@ -41,7 +41,7 @@ public class UserEntity {
     private Long rolId;*/
 
     @ManyToOne
-    @JoinColumn(name = "rol_id", nullable = false, updatable = false)
+    @JoinColumn(name = "rol_id", nullable = false, updatable = true)
     private RolEntity rol;
 
 }

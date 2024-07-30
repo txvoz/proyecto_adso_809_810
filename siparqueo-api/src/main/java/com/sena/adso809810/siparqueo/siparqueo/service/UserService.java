@@ -135,8 +135,7 @@ public class UserService {
         entity.setPhone(newData.getPhone());
         entity.setAvatar(newData.getAvatar());
 
-        RolEntity rol = new RolEntity();
-        rol.setId(newData.getRolId());
+        RolEntity rol = rolService.getRolById(newData.getRolId());
         entity.setRol(rol);
 
         this.repository.save(entity);
