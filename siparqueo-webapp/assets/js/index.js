@@ -1,7 +1,8 @@
 $(function () {
 
-    $("#resetData").click(function(){
+    $("#resetData").click(function () {
         $(".error-input").removeClass("error-input");
+        $("#userId").val("");
     });
 
     loadZoneTemplate("header");
@@ -12,55 +13,6 @@ $(function () {
     loadFormEvent();
 
 });
-
-function deleteUser(id) {
-    var url = "http://localhost:8080/user/" + id;
-
-    $.ajax({
-        url: url,
-        type: "DELETE",
-        contentType: "application/json; charset=utf-8",
-        success: function (result) {
-            try {
-                alert("Registro eliminado con exito!");
-                loadUsuarios();
-            } catch (e) {
-                console.log("Error en cbSuccess", e);
-            }
-        },
-        error: function (xhr, status, error) {
-            try {
-                console.log(error);
-                cbError(xhr.status);
-            } catch (e) {
-                console.log("Error en cbError", e);
-            }
-        }
-    });
-}
-
-function loadZoneTemplate(zone) {
-    var url = "assets/template/" + zone + ".html";
-    $.ajax({
-        url: url,
-        type: "GET",
-        success: function (result) {
-            try {
-                $("#content_" + zone).html(result);
-            } catch (e) {
-                console.log("Error en cbSuccess", e);
-            }
-        },
-        error: function (xhr, status, error) {
-            try {
-                console.log(error);
-                cbError(xhr.status);
-            } catch (e) {
-                console.log("Error en cbError", e);
-            }
-        }
-    });
-}
 
 function loadFormEvent() {
 
@@ -99,7 +51,7 @@ function loadFormEvent() {
             $("#rol").addClass("error-input");
         }
 
-        if($(".error-input").length > 0) {
+        if ($(".error-input").length > 0) {
             alert("Verifique los datos ingresados");
             return;
         }
@@ -113,8 +65,40 @@ function loadFormEvent() {
             "avatar": "foto.png",
             "rolId": $("#rol").val()
         };
-        
-        createUsuario(objUsuario);
+
+        if ($("#userId").val() === "") {
+            console.log("Creando nuevo usuario " + JSON.stringify(objUsuario));
+            createUsuario(objUsuario);
+        } else {
+            var userId = $("#userId").val();
+            console.log("Editando usuario " + userId + " :: " + JSON.stringify(objUsuario));
+            editUsuario(userId, objUsuario);
+        }
+
+    });
+
+}
+
+function viewUser(id) {
+    var url = "http://localhost:8080/user/" + id;
+    callApi(url, "GET", null, renderUser);
+}
+
+function deleteUser(id) {
+    var url = "http://localhost:8080/user/" + id;
+    callApi(url, "DELETE", null, function () {
+        alert("Registro eliminado con exito!");
+        loadUsuarios();
+    })
+}
+
+function editUsuario(id, data) {
+    var url = "http://localhost:8080/user/" + id;
+
+    callApi(url, "PUT", data, function () {
+        alert("Registro actualizado");
+        $("#resetData").click();
+        loadUsuarios();
     });
 
 }
@@ -122,81 +106,38 @@ function loadFormEvent() {
 function createUsuario(data) {
     var url = "http://localhost:8080/user";
 
-    $.ajax({
-        url: url,
-        type: "POST",
-        contentType: "application/json; charset=utf-8",
-        dataType: "json",
-        data: JSON.stringify(data), 
-        success: function (result) {
-            try {
-                alert("Registro creado");
-                $("#resetData").click();
-                loadUsuarios();
-            } catch (e) {
-                console.log("Error en cbSuccess", e);
-            }
-        },
-        error: function (xhr, status, error) {
-            try {
-                console.log(error);
-                cbError(xhr.status);
-            } catch (e) {
-                console.log("Error en cbError", e);
-            }
-        }
+    callApi(url, "POST", data, function () {
+        alert("Registro creado");
+        $("#resetData").click();
+        loadUsuarios();
     });
 }
 
 function loadUsuarios() {
     var url = "http://localhost:8080/user";
-
-    $.ajax({
-        url: url,
-        type: "GET",
-        contentType: "application/json; charset=utf-8",
-        success: function (result) {
-            try {
-                renderUsers(result);
-            } catch (e) {
-                console.log("Error en cbSuccess", e);
-            }
-        },
-        error: function (xhr, status, error) {
-            try {
-                console.log(error);
-                cbError(xhr.status);
-            } catch (e) {
-                console.log("Error en cbError", e);
-            }
-        }
-    });
+    callApi(url, "GET", null, renderUsers);
 }
 
 function loadRoles() {
     var url = "http://localhost:8080/rol";
+    callApi(url, "GET", null, renderRoles);
+}
 
-    $.ajax({
-        url: url,
-        type: "GET",
-        contentType: "application/json; charset=utf-8",
-        success: function (result) {
-            try {
-                renderRoles(result);
-            } catch (e) {
-                console.log("Error en cbSuccess", e);
-            }
-        },
-        error: function (xhr, status, error) {
-            try {
-                console.log(error);
-                cbError(xhr.status);
-            } catch (e) {
-                console.log("Error en cbError", e);
-            }
-        }
-    });
+function renderUser(result) {
+    var data = result.data;
 
+    var birthDayUser = new Date(data.bornDate);
+    var day = ("0" + birthDayUser.getDate()).slice(-2);
+    var month = ("0" + (birthDayUser.getMonth() + 1)).slice(-2);
+    var today = birthDayUser.getFullYear() + "-" + (month) + "-" + (day);
+
+    $("#userId").val(data.id);
+    $("#nombres").val(data.fullName);
+    $("#fechaNacimiento").val(today);
+    $("#color").val(data.color);
+    $("#correo").val(data.email);
+    $("#telefono").val(data.phone);
+    $("#rol").val(data.rolId);
 }
 
 function renderUsers(result) {
@@ -204,32 +145,38 @@ function renderUsers(result) {
     for (var i = 0; i < result.data.length; i++) {
         var user = result.data[i];
         html += "<tr>";
-        html += "<th scope='row'>"+(i+1)+"</th>"
-        html += "<td>"+user.id+"</td>"
-        html += "<td>"+user.fullName+"</td>"
-        html += "<td>"+user.bornDate+"</td>"
-        html += "<td>"+0+"</td>"
+        html += "<th scope='row'>" + (i + 1) + "</th>"
+        html += "<td>" + user.id + "</td>"
+        html += "<td>" + user.fullName + "</td>"
+        html += "<td>" + user.bornDate + "</td>"
+        html += "<td>" + 0 + "</td>"
         html += "<td>"
-        html += "<div class='userColor' style='background-color:"+user.color+"'></div>"
-        html += "<label class='detail-color'>"+user.color+"</label>"
+        html += "<div class='userColor' style='background-color:" + user.color + "'></div>"
+        html += "<label class='detail-color'>" + user.color + "</label>"
         html += "</td>"
-        html += "<td>"+user.email+"</td>"
-        html += "<td>"+user.phone+"</td>"
+        html += "<td>" + user.email + "</td>"
+        html += "<td>" + user.phone + "</td>"
         html += "<td>"
         html += "<img src='http://localhost/imagenes/not-found.png' class='avatar' width='50px' height='50px'>"
         html += "</td>"
-        html += "<td>"+user.rolName+"</td>"
+        html += "<td>" + user.rolName + "</td>"
         html += "<td>"
-        html += "<div data-id='"+user.id+"' class='eliminar'>Eliminar</div>"
-        html += "<div data-id='"+user.id+"' class='editar'>Editar</div>"
+        html += "<div data-id='" + user.id + "' class='eliminar'>Eliminar</div>"
+        html += "<div data-id='" + user.id + "' class='editar'>Editar</div>"
         html += "</td>"
         html += "</tr>"
     }
     $("#bodyListUsers").html(html);
-    $(".eliminar").click(function(){
-        if(confirm("Desea eliminar el registro?")) {
+    $(".eliminar").click(function () {
+        if (confirm("Desea eliminar el registro?")) {
             var id = $(this).data('id');
             deleteUser(id);
+        }
+    });
+    $(".editar").click(function () {
+        if (confirm("Desea editar el registro?")) {
+            var id = $(this).data('id');
+            viewUser(id);
         }
     });
 }
@@ -241,8 +188,4 @@ function renderRoles(result) {
         html += "<option value='" + opcion.id + "'>" + opcion.name + "</option>";
     }
     $("#rol").html(html);
-}
-
-function cbError(error) {
-    alert("El llamado al servidor fallo " + error);
 }
