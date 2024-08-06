@@ -1,5 +1,6 @@
 package com.sena.adso809810.siparqueo.siparqueo.service;
 
+import com.sena.adso809810.siparqueo.siparqueo.conf.Constants;
 import com.sena.adso809810.siparqueo.siparqueo.dto.UserDto;
 import com.sena.adso809810.siparqueo.siparqueo.entity.RolEntity;
 import com.sena.adso809810.siparqueo.siparqueo.entity.UserEntity;
@@ -10,6 +11,7 @@ import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.io.File;
 import java.sql.Array;
 import java.util.ArrayList;
 import java.util.List;
@@ -68,6 +70,20 @@ public class UserService {
 
         for(int i = 0; i < entities.size(); i++) {
             UserEntity entity =  entities.get(i);
+
+            String fullpathAvatar = Constants.PATH_UPLOAD + entity.getAvatar();
+
+            System.out.println(fullpathAvatar);
+
+            File archivo = new File(fullpathAvatar);
+            if (archivo.exists()) {
+                fullpathAvatar = "http://localhost:8081/siparqueo-webapp/assets/files/"+entity.getAvatar();
+            } else {
+                fullpathAvatar = "http://localhost:8081/imagenes/not-found.png";
+            }
+
+            System.out.println("Avatar - " +fullpathAvatar);
+
             UserDto dto = UserDto.builder()
                     .id(entity.getId())
                     .fullName(entity.getFullName())
@@ -78,6 +94,7 @@ public class UserService {
                     .avatar(entity.getAvatar())
                     .rolId(entity.getRol().getId())
                     .rolName(entity.getRol().getTitle())
+                    .fullpathAvatar(fullpathAvatar)
                     .build();
             dtos.add(dto);
         }

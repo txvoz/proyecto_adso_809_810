@@ -21,7 +21,6 @@
     <div class="container" style="border: 1px solid #000">
 
         <div id="content_header">
-
         </div>
 
         <form id="frm1" style="margin: 50px;">
@@ -52,7 +51,8 @@
                 </div>
                 <div class="col-3">
                     <label for="avatar" class="form-label">Avatar</label>
-                    <input type="file" class="form-control" id="avatar" accept="image/*" onselect="upload()">
+                    <input type="hidden" id="fileName" />
+                    <input type="file" class="form-control" id="avatar" accept="image/*" onchange="upload()">
                 </div>
 
                 <div class="col-3">

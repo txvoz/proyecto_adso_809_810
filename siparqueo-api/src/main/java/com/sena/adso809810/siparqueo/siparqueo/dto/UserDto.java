@@ -39,4 +39,6 @@ public class UserDto {
     private String rolName;
 
     private String password;
+
+    private String fullpathAvatar;
 }

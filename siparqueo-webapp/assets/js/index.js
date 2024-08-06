@@ -62,7 +62,7 @@ function loadFormEvent() {
             "color": $("#color").val(),
             "email": $("#correo").val(),
             "phone": $("#telefono").val(),
-            "avatar": "foto.png",
+            "avatar": $("#fileName").val(),
             "rolId": $("#rol").val()
         };
 
@@ -157,7 +157,7 @@ function renderUsers(result) {
         html += "<td>" + user.email + "</td>"
         html += "<td>" + user.phone + "</td>"
         html += "<td>"
-        html += "<img src='http://localhost/imagenes/not-found.png' class='avatar' width='50px' height='50px'>"
+        html += "<img src='" + user.fullpathAvatar + "' class='avatar' width='50px' height='50px'>"
         html += "</td>"
         html += "<td>" + user.rolName + "</td>"
         html += "<td>"
@@ -188,4 +188,41 @@ function renderRoles(result) {
         html += "<option value='" + opcion.id + "'>" + opcion.name + "</option>";
     }
     $("#rol").html(html);
+}
+
+
+function upload() {
+    url = "http://localhost:8080/file/upload";
+
+    var formData = new FormData();
+    formData.append("file", $("#avatar")[0].files[0]);
+
+    $.ajax({
+        url: url,
+        type: "POST",
+        contentType: false,
+        dataType: "json",
+        data: formData, 
+        cache:false,
+        processData: false,
+        headers: {
+            'Authorization':'token123'
+        },
+        success: function (result) {
+            try {
+                $("#fileName").val(result.data);
+                alert("Archivo subido con exito " + JSON.stringify(result));
+            } catch (e) {
+                console.log("Error en cbSuccess", e);
+            } 
+        },
+        error: function (xhr, status, error) {
+            try {
+                console.log(error);
+            } catch (e) {
+                cbErrorBase(xhr.status);
+                console.log("Error en cbError", e);
+            }
+        }
+    });
 }
