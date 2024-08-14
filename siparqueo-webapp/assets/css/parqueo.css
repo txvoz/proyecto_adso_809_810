@@ -10,7 +10,7 @@
 
 .contenedor-zonas .zona {
     position: relative;
-    border: 3px solid #999;
+    border: 3px solid #26ae2f;
     width: 100px;
     height: 100px;
     vertical-align: top;
@@ -19,6 +19,9 @@
     margin-top: 20px;
     border-radius: 20px;
     cursor: pointer;
+    background-image: url(../images/check.webp);
+    background-size: 100%;
+    background-repeat: no-repeat;
 }
 
 .contenedor-zonas .zona.disabled {
@@ -33,6 +36,11 @@
 .contenedor-zonas .zona.reserved {
     border: 3px solid #0674a3;
     background-color: #e0f0fc;
+    background-image: url(../images/automovil.png);
+    background-size: 70%;
+    background-repeat: no-repeat;
+    background-position: center;
+
 }
 
 .contenedor-zonas .zona .title {
@@ -41,7 +49,7 @@
     font-size: 20px;
     padding: 10px;
     border-radius: 50%;
-    border: 1px solid #555;
+    border: 1px solid #26ae2f;
     background-color: #fff;
     position: absolute;
     top: -5px;
@@ -54,3 +62,11 @@
     color: #fa5656;
     font-weight: bold;
 }
+
+.contenedor-zonas .zona.zona.reserved .title {
+    border-color: #0674a3 !important;
+    background-color: #fff !important;
+    color: #0674a3;
+}
+
+

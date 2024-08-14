@@ -47,14 +47,19 @@ function callApi(url, method, data, cbSuccess, cbError) {
     });
 }
 
-function loadZoneTemplate(zone) {
-    var url = "assets/template/" + zone + ".html";
+function loadZoneTemplate(zone, cbSuccess) {
+
+    var url = "assets/template/" + zone + ".html?o=" + Math.random();
     $.ajax({
         url: url,
         type: "GET",
         success: function (result) {
             try {
                 $("#content_" + zone).html(result);
+
+                if(cbSuccess) {
+                    cbSuccess();
+                }
             } catch (e) {
                 console.log("Error en cbSuccess", e);
             }
@@ -72,4 +77,32 @@ function loadZoneTemplate(zone) {
 
 function cbErrorBase(error) {
     alert("El llamado al servidor fallo " + error);
+}
+
+function loadZoneMain(main, cbSuccess) {
+
+    var url = "pages/" + main + ".html?o=" + Math.random();
+    $.ajax({
+        url: url,
+        type: "GET",
+        success: function (result) {
+            try {
+                $("#content_main").html(result);
+
+                if(cbSuccess) {
+                    cbSuccess();
+                }
+            } catch (e) {
+                console.log("Error en cbSuccess", e);
+            }
+        },
+        error: function (xhr, status, error) {
+            try {
+                console.log(error);
+                cbError(xhr.status);
+            } catch (e) {
+                console.log("Error en cbError", e);
+            }
+        }
+    });
 }

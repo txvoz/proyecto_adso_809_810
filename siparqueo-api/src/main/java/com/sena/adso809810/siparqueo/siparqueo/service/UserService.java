@@ -77,9 +77,9 @@ public class UserService {
 
             File archivo = new File(fullpathAvatar);
             if (archivo.exists()) {
-                fullpathAvatar = "http://localhost:8081/siparqueo-webapp/assets/files/"+entity.getAvatar();
+                fullpathAvatar = Constants.STATIC_RESOURCES + "siparqueo-webapp/assets/files/"+entity.getAvatar();
             } else {
-                fullpathAvatar = "http://localhost:8081/imagenes/not-found.png";
+                fullpathAvatar = Constants.STATIC_RESOURCES +  "imagenes/not-found.png";
             }
 
             System.out.println("Avatar - " +fullpathAvatar);
